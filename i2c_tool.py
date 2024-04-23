@@ -5,10 +5,6 @@ import argparse
 from pyftdi.ftdi import Ftdi
 from pyftdi.i2c import I2cController, I2cNackError
 
-## create the parser for the "b" command
-#parser_b = subparsers.add_parser('b', help='b help')
-#parser_b.add_argument('--baz', choices='XYZ', help='baz help')
-
 def list_devices(args):
     Ftdi.show_devices()
 
@@ -19,11 +15,10 @@ def scan(args):
     HIGHEST_I2C_SLAVE_ADDRESS = 0x78
     i2c = I2cController()
     slaves = []
-    #i2c.configure(args.device, frequency = 400) # TODO: accept freq as parameter
-
+    
     try:
         i2c.set_retry_count(2)
-        i2c.force_clock_mode(False) # TODO: maybe change
+        i2c.force_clock_mode(False) 
         i2c.configure(args.device, frequency = 400) # TODO: accept freq as parameter
         for addr in range(HIGHEST_I2C_SLAVE_ADDRESS+1):
             port = i2c.get_port(addr)
@@ -60,7 +55,7 @@ def dump(args):
         try:
             # setup i2c instance and slave
             i2c.set_retry_count(1)
-            i2c.force_clock_mode(False) # TODO: maybe change
+            i2c.force_clock_mode(False) 
             i2c.configure(args.device, frequency = 400) # TODO: accept freq as parameter
             slave = i2c.get_port(I2C_SLAVE_ADDRESS)
 
